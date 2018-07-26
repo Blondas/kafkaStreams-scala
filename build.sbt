@@ -8,5 +8,7 @@ val kafkaVersion = "1.1.1"
 
 libraryDependencies ++= Seq(
   "org.apache.kafka" % "kafka-streams" % kafkaVersion,
-  "org.apache.kafka" % "kafka-clients" % kafkaVersion
+  "org.apache.kafka" % "kafka-clients" % kafkaVersion,
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0"
 )
