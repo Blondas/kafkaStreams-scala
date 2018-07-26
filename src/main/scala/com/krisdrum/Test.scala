@@ -6,7 +6,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.kafka.streams.{KafkaStreams, StreamsBuilder, StreamsConfig, Topology}
 
-object Test  extends App with LazyLogging {
+object Test  extends App with Config with LazyLogging {
   val builder: StreamsBuilder = ???
   val topology: Topology = ???
   val config: StreamsConfig = ???
