@@ -1,6 +1,9 @@
 package com.krisdrum
 
+import java.util.concurrent.TimeUnit
+
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.commons.lang.exception.ExceptionUtils
 import org.apache.kafka.streams.{KafkaStreams, StreamsBuilder, StreamsConfig, Topology}
 
 object Test  extends App with LazyLogging {
@@ -10,9 +13,13 @@ object Test  extends App with LazyLogging {
 
   val stream: KafkaStreams = new KafkaStreams(topology, config)
 
-  stream.setUncaughtExceptionHandler((thread, throwable) => logger.debug("This is very convenient ;-)"))
+  stream.setUncaughtExceptionHandler((thread, throwable) =>
+    logger.error("Stream terminated because of uncaught exception.", ExceptionUtils.getRootCause(throwable)))
 
   stream.start()
 
-  stream.close()
+  sys.addShutdownHook {
+    stream.close(10, TimeUnit.SECONDS)
+    logger.info("Shutting down streams.")
+  }
 }
